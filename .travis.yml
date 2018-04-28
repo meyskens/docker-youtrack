@@ -21,7 +21,7 @@ before_install:
 script:
   - wget -N https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VER/x86_64_qemu-${QEMU_ARCH}-static.tar.gz
   - tar -xvf x86_64_qemu-${QEMU_ARCH}-static.tar.gz
-  - docker build -t $DOCKER_REPO:$ARCH-$VERSION --build-arg ARCHREPO="$ARCHREPO" --build-arg VERSION="$VERSION" --build-arg QEMU_ARCH="$QQEMU_ARCH"  ./
+  - docker build -t $DOCKER_REPO:$ARCH-$VERSION --build-arg ARCHREPO="$ARCHREPO" --build-arg VERSION="$VERSION" --build-arg QEMU_ARCH="$QEMU_ARCH"  ./
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin

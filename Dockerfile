@@ -1,6 +1,9 @@
 ARG ARCHREPO
 FROM ${ARCHREPO}/openjdk:8-slim
 
+ARG QEMU_ARCH
+COPY qemu-${QEMU_ARCH}-static /usr/bin/
+
 RUN apt-get update && apt-get install -y wget
 
 ARG YOUTRACK_VERSION=2018.1.41051

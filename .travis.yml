@@ -6,7 +6,7 @@ env:
       - QEMU_VER=v2.9.1
       - DOCKER_REPO=maartje/youtrach
     matrix:
-      - ARCH=amd64 ARCHREPO=amd64   QQEMU_ARCH=x86_64   VERSION=2018.1.41051
+      - ARCH=amd64 ARCHREPO=amd64   QEMU_ARCH=x86_64   VERSION=2018.1.41051
       - ARCH=armhf ARCHREPO=arm32v7 QEMU_ARCH=arm       VERSION=2018.1.41051
       - ARCH=arm64 ARCHREPO=arm64v8 QEMU_ARCH=aarch64   VERSION=2018.1.41051
 
@@ -19,7 +19,9 @@ before_install:
   - docker run --rm --privileged multiarch/qemu-user-static:register
 
 script:
-  - docker build -t $DOCKER_REPO:$ARCH-$VERSION --build-arg ARCHREPO="$ARCHREPO" --build-arg VERSION="$VERSION"  ./
+  - wget -N https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VER/x86_64_qemu-${QEMU_ARCH}-static.tar.gz
+  - tar -xvf x86_64_qemu-${QEMU_ARCH}-static.tar.gz
+  - docker build -t $DOCKER_REPO:$ARCH-$VERSION --build-arg ARCHREPO="$ARCHREPO" --build-arg VERSION="$VERSION" --build-arg QEMU_ARCH="$QQEMU_ARCH"  ./
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin

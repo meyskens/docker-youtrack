@@ -2,7 +2,7 @@ ARG ARCHREPO
 FROM ${ARCHREPO}/openjdk:9-slim
 
 ARG QEMU_ARCH
-#COPY qemu-${QEMU_ARCH}-static /usr/bin/
+COPY qemu-${QEMU_ARCH}-static /usr/bin/
 
 RUN apt-get update && apt-get install -y wget
 
